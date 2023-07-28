@@ -2,7 +2,7 @@
 use_gpu: False
 
 # Deciding which GPU to use
-device: all
+device: -1
 
 # Federate learning related options
 federate:
@@ -13,14 +13,14 @@ federate:
   # Number of dataset being split
   client_num: 5
   # Number of communication round
-  total_round_num: 400
+  total_round_num: 200
 
 # Dataset related options
 data:
   # Root directory where the data stored
   # root: data/
   # Dataset name
-  type: cooking200
+  type: hg_cooking200
   # Use Louvain algorithm to split `Cooking200`
   splitter: 'louvain'
 dataloader:
@@ -32,9 +32,9 @@ dataloader:
 # Model related options
 model:
   # Model type
-  type: gcn
+  type: hgnn
   # Hidden dim
-  hidden: 64
+  hidden: 32
   # Dropout rate
   dropout: 0.5
   # Number of Class of `Cooking200`
