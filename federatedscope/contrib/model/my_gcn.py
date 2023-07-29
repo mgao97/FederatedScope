@@ -25,7 +25,7 @@ class MyGCN(torch.nn.Module):
                 self.convs.append(GCNConv(hidden, hidden))
         self.dropout = dropout
 
-    def froward(self, data):
+    def forward(self, data):
         if isinstance(data, Data):
             x, edge_index = data.x, data.edge_index
         elif isinstance(data, tuple):

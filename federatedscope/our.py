@@ -1,3 +1,16 @@
+# Import FederatedScope modules
+from federatedscope.core.cmd_args import parse_args, parse_client_cfg
+from federatedscope.core.auxiliaries.data_builder import get_data
+from federatedscope.core.auxiliaries.utils import setup_seed
+from federatedscope.core.auxiliaries.logging import update_logger
+from federatedscope.core.auxiliaries.worker_builder import get_client_cls, get_server_cls
+from federatedscope.core.configs.config import global_cfg, CfgNode
+from federatedscope.core.auxiliaries.runner_builder import get_runner
+
+# Import your custom GNN model and dataset functions
+from federatedscope.contrib.model.my_gcn import MyGCN
+from federatedscope.contrib.data.load_hypergraph_clique_Cooking200 import Cooking200
+
 from federatedscope.core.data.utils import convert_data_mode
 from federatedscope.core.auxiliaries.utils import setup_seed
 
@@ -73,4 +86,50 @@ def call_cooking200(config, client_cfgs):
 
 register_data('cooking200', call_cooking200)
 
+if __name__ == '__main__':
+    # Initialize the configuration with global_cfg.clone()
+    init_cfg = global_cfg.clone()
 
+    # Parse command-line arguments
+    args = parse_args()
+
+    # Merge configurations from the configuration file and command-line options
+    if args.cfg_file:
+        init_cfg.merge_from_file(args.cfg_file)
+    cfg_opt, client_cfg_opt = parse_client_cfg(args.opts)
+    init_cfg.merge_from_list(cfg_opt)
+
+    # Update logger and set random seed
+    update_logger(init_cfg, clear_before_add=True)
+    setup_seed(init_cfg.seed)
+
+    # Load clients' cfg file
+    if args.client_cfg_file:
+        client_cfgs = CfgNode.load_cfg(open(args.client_cfg_file, 'r'))
+        client_cfgs.merge_from_list(client_cfg_opt)
+    else:
+        client_cfgs = None
+
+    # Load your custom dataset using load_custom_dataset() function
+    data, modified_cfg = call_cooking200(config=init_cfg.clone(), client_cfgs=client_cfgs)
+    init_cfg.merge_from_other_cfg(modified_cfg)
+
+    init_cfg.freeze()
+
+    # Create the federated GNN model using your custom model class MyGCN
+    gnn_model = MyGCN(data.x_shape[-1],
+                20,
+                32,
+                2,
+                .0)
+
+    # Create the federated runner
+    runner = get_runner(data=data,
+                        server_class=get_server_cls(init_cfg),
+                        client_class=get_client_cls(init_cfg),
+                        config=init_cfg.clone(),
+                        client_configs=client_cfgs,
+                        model=gnn_model)
+
+    # Train the GNN model in a federated learning manner
+    _ = runner.run()

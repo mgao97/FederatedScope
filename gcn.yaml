@@ -1,8 +1,8 @@
 # Whether to use GPU
-use_gpu: False
+use_gpu: True
 
 # Deciding which GPU to use
-device: all
+device: 0
 
 # Federate learning related options
 federate:
@@ -32,7 +32,7 @@ dataloader:
 # Model related options
 model:
   # Model type
-  type: gcn
+  type: mygcn
   # Hidden dim
   hidden: 64
   # Dropout rate

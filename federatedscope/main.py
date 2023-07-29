@@ -1,5 +1,6 @@
 import os
 import sys
+# import pdb
 
 DEV_MODE = False  # simplify the federatedscope re-setup everytime we change
 # the source codes of federatedscope
@@ -31,6 +32,7 @@ if __name__ == '__main__':
 
     update_logger(init_cfg, clear_before_add=True)
     setup_seed(init_cfg.seed)
+    # pdb.set_trace()
 
     # load clients' cfg file
     if args.client_cfg_file:
@@ -43,6 +45,7 @@ if __name__ == '__main__':
     # federated dataset might change the number of clients
     # thus, we allow the creation procedure of dataset to modify the global
     # cfg object
+    
     data, modified_cfg = get_data(config=init_cfg.clone(),
                                   client_cfgs=client_cfgs)
     init_cfg.merge_from_other_cfg(modified_cfg)

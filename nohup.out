@@ -1,0 +1,36 @@
+<frozen importlib._bootstrap>:228: RuntimeWarning: scipy._lib.messagestream.MessageStream size changed, may indicate binary incompatibility. Expected 56 from C header, got 64 from PyObject
+2023-07-28 18:31:37,258 (data_builder:15)WARNING: No module named 'dhg' in `federatedscope.contrib.data`, some modules are not available.
+Traceback (most recent call last):
+  File "/users/Min/FederatedScope/federatedscope/main.py", line 14, in <module>
+    from federatedscope.core.auxiliaries.worker_builder import get_client_cls, \
+  File "/users/Min/FederatedScope/federatedscope/core/auxiliaries/worker_builder.py", line 4, in <module>
+    from federatedscope.core.workers import Server, Client
+  File "/users/Min/FederatedScope/federatedscope/core/workers/__init__.py", line 4, in <module>
+    from federatedscope.core.workers.server import Server
+  File "/users/Min/FederatedScope/federatedscope/core/workers/server.py", line 18, in <module>
+    from federatedscope.core.auxiliaries.trainer_builder import get_trainer
+  File "/users/Min/FederatedScope/federatedscope/core/auxiliaries/trainer_builder.py", line 5, in <module>
+    from federatedscope.core.trainers import Trainer
+  File "/users/Min/FederatedScope/federatedscope/core/trainers/__init__.py", line 2, in <module>
+    from federatedscope.core.trainers.trainer import Trainer
+  File "/users/Min/FederatedScope/federatedscope/core/trainers/trainer.py", line 10, in <module>
+    from federatedscope.core.trainers.context import Context, CtxVar, lifecycle
+  File "/users/Min/FederatedScope/federatedscope/core/trainers/context.py", line 5, in <module>
+    from federatedscope.core.auxiliaries.model_builder import \
+  File "/users/Min/FederatedScope/federatedscope/core/auxiliaries/model_builder.py", line 8, in <module>
+    from federatedscope.contrib.model import *
+  File "/users/Min/FederatedScope/federatedscope/contrib/model/my_gcn.py", line 5, in <module>
+    from torch_geometric.data import Data
+  File "/users/Min/miniconda/envs/py39/lib/python3.9/site-packages/torch_geometric/__init__.py", line 4, in <module>
+    import torch_geometric.data
+  File "/users/Min/miniconda/envs/py39/lib/python3.9/site-packages/torch_geometric/data/__init__.py", line 1, in <module>
+    from .data import Data
+  File "/users/Min/miniconda/envs/py39/lib/python3.9/site-packages/torch_geometric/data/data.py", line 9, in <module>
+    from torch_sparse import SparseTensor
+  File "/users/Min/miniconda/envs/py39/lib/python3.9/site-packages/torch_sparse/__init__.py", line 19, in <module>
+    torch.ops.load_library(spec.origin)
+  File "/users/Min/miniconda/envs/py39/lib/python3.9/site-packages/torch/_ops.py", line 110, in load_library
+    ctypes.CDLL(path)
+  File "/users/Min/miniconda/envs/py39/lib/python3.9/ctypes/__init__.py", line 382, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: /users/Min/miniconda/envs/py39/lib/python3.9/site-packages/torch_sparse/_version_cuda.so: undefined symbol: _ZN5torch3jit17parseSchemaOrNameERKSs
